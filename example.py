@@ -9,7 +9,8 @@ from peewee import (Model,
                     DateTimeField,
                     BooleanField,
                     TextField,
-                    ForeignKeyField)
+                    ForeignKeyField,
+                    fn)
 from uuid import uuid4
 
 
@@ -95,3 +96,34 @@ print('')
 print('select single field and filter by subscript')
 for t in Tweet.select(Tweet.message).where(Tweet.details['a'] == 1):
     print('message: ' + t.message)
+
+print('')
+print('date filter')
+for t in Tweet.select().join(User).where(
+        User.username == 'Arthur',
+        Tweet.created_date > datetime(2015, 10, 10)).order_by(Tweet.created_date):
+    print(t)
+
+
+print('')
+print('count tweets')
+print(Tweet.select().count())
+
+
+print('')
+print('distinct')
+print(Tweet.select(fn.Distinct(Tweet.user)).scalar())
+
+
+print('')
+print('group by')
+for t in Tweet.select(Tweet.user, fn.Count(Tweet.id).alias('ct'))\
+        .group_by(Tweet.user)\
+        .tuples():
+    print(t)
+
+
+print('')
+print('extract')
+for t in Tweet.select(Tweet).where(Tweet.created_date.year == '2015'):
+    print(t)

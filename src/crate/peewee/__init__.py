@@ -6,8 +6,10 @@ from peewee import (Database,
                     Field,
                     OP,
                     SQL,
+                    R,
                     EnclosedClause,
-                    Node)
+                    Node,
+                    fn)
 
 
 def no_modifiers():
@@ -112,3 +114,6 @@ class CrateDatabase(Database):
 
     def create_index(self, model_class, fields, unique=False):
         pass
+
+    def extract_date(self, date_part, date_field):
+        return fn.EXTRACT(Clause(R(date_part), R('FROM'), date_field))
