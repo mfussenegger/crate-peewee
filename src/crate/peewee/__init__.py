@@ -100,8 +100,8 @@ class CrateDatabase(Database):
         OP.ILIKE: 'LIKE',
     }
 
-    def __init__(self, hosts=None):
-        super().__init__(self, 'default')
+    def __init__(self, *args, **kwargs):
+        super().__init__(self, 'default', *args, **kwargs)
 
     def _connect(self, database, **kwargs):
         return connect(**kwargs)
