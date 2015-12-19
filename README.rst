@@ -4,8 +4,11 @@ crate-peewee
 
 Crate driver for `peewee <https://github.com/coleifer/peewee>`_, a small, expressive ORM.
 
+Most basic operations work. Support for special Crate features like fulltext
+search or object and array fields is still a work in progress.
 
-This is a work in progress and not yet usable.
+For a full documentation take a look at the `peewee documentation
+<http://docs.peewee-orm.com/en/latest/>`_.
 
 
 Usage
