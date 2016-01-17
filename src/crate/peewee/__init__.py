@@ -41,6 +41,20 @@ class ObjectField(Field):
         return SubscriptNode(self, [value])
 
 
+class ArrayField(Field):
+
+    def __init__(self, field_class, *args, **kwargs):
+        self.__field = field_class(*args, **kwargs)
+        self.__field.get_modifiers = no_modifiers
+        self.db_field = self.__field.get_db_field()
+        super().__init__(*args, **kwargs)
+
+    def __ddl_column__(self, column_type):
+        sql = self.__field.__ddl_column__(column_type)
+        sql.value = 'array(' + sql.value + ')'
+        return sql
+
+
 class CrateCompiler(QueryCompiler):
 
     def _parse_subscript(self, node, alias_map, conv):
@@ -69,8 +83,8 @@ class CrateCompiler(QueryCompiler):
                 SQL('PRIMARY KEY'), EnclosedClause(*pk_cols)))
         for field in meta.sorted_fields:
             columns.append(self.field_definition(field))
-            ## No ForeignKeyField support
-            #if isinstance(field, ForeignKeyField) and not field.deferred:
+            # No ForeignKeyField support
+            # if isinstance(field, ForeignKeyField) and not field.deferred:
             #    constraints.append(self.foreign_key_constraint(field))
 
         if model_class._meta.constraints:
@@ -83,7 +97,6 @@ class CrateCompiler(QueryCompiler):
             SQL(statement),
             model_class.as_entity(),
             EnclosedClause(*(columns + constraints)))
-
 
 
 class CrateDatabase(Database):
