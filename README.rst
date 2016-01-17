@@ -2,6 +2,19 @@
 crate-peewee
 ============
 
+.. image:: https://img.shields.io/pypi/wheel/crate-peewee.svg
+    :target: https://pypi.python.org/pypi/crate-peewee/
+    :alt: Wheel
+
+.. image:: https://img.shields.io/pypi/v/crate-peewee.svg
+   :target: https://pypi.python.org/pypi/crate-peewee/
+   :alt: PyPI Version
+
+.. image:: https://img.shields.io/pypi/pyversions/crate-peewee.svg
+   :target: https://pypi.python.org/pypi/crate-peewee/
+   :alt: Python Version
+
+
 Crate driver for `peewee <https://github.com/coleifer/peewee>`_, a small, expressive ORM.
 
 Most basic operations work. Support for special Crate features like fulltext
